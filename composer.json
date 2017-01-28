@@ -1,0 +1,13 @@
+{
+    "name": "administrator/test_4t",
+    "authors": [
+        {
+            "name": "Vi Hoang Son",
+            "email": "vihoangson@gmail.com"
+        }
+    ],
+    "require": {
+        "golonka/bbcodeparser": "^2.2",
+        "devristo/bbcode": "^0.1.0"
+    }
+}

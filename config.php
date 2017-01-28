@@ -1,4 +1,5 @@
 <?php
+phpinfo();
     require("vendor/autoload.php");
     use Devristo\BBCode\BBCode;
     use Devristo\BBCode\Parser\RenderContext;
