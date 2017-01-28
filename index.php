@@ -1,19 +1,28 @@
-<?php 
-$servername = "localhost";
-$username = "root";
-$password = "";
+<?php
+require "config.php";
+$sql = "SELECT * FROM `mst_forum` ";
+if ($result = $mysqli->query($sql)) {
+	$forums = [];
+	while ($row = $result->fetch_object()){
+		$forums[] = $row;
+	}
+}
 
-$mysqli = new mysqli("localhost", "root", "", "tttt4r");
-$mysqli->set_charset("latin1")
  ?>
  <!DOCTYPE html>
  <html lang="">
  	<head>
- 		<meta charset="latin1">
+ 		<meta charset="utf-8">
  		<meta http-equiv="X-UA-Compatible" content="IE=edge">
  		<meta name="viewport" content="width=device-width, initial-scale=1">
  		<title>Title Page</title>
- 
+		 <style>
+			 authen {
+				 display: block;
+				 font-weight: bold;
+				 margin-bottom: 23px;
+			 }
+		 </style>
  		<!-- Bootstrap CSS -->
  		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
  
@@ -26,29 +35,16 @@ $mysqli->set_charset("latin1")
  	</head>
  	<body>
  	<div class="container">
- <?php 
-$sql = "SELECT * FROM `mst_post` ORDER BY COALESCE(parentid, postid), parentid IS NOT NULL, postid";
-$sql = "SELECT * FROM `mst_post` where parentid = 0 ";
-if ($result = $mysqli->query($sql)) {
-    $i = 1;
-    while ($row = $result->fetch_object()){
-    	echo $i.": ";
-    	echo $row->postid;
-    	echo "<br>";
-        echo $row->title;
-        echo "<br>";
-        echo $row->parentid;
-        echo "<br>";
-        ?>
-        <button type="button" class="btn btn-info view-content" data-id="<?= $row->postid ?>" >button</button>
-        <?php
-        echo "<hr>";
-        $i++;
-    }
-    /* free result set */
-    $result->close();
-}
-  ?>
+ <?php
+	foreach ($forums as $key => $value){
+ 		echo "
+	<div>
+		<h3 class='view-forum' data-id='$value->forumid'>$value->title</h3>
+		<div class='content-forum'></div>
+	</div>
+";
+	}
+ ?>
 </div>
 <div class="modal fade" id="modal-id">
 	<div class="modal-dialog">
@@ -73,16 +69,40 @@ if ($result = $mysqli->query($sql)) {
  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
  		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
   		<script>
-  			$(".view-content").click(function(){
-  				var id_post = $(this).data("id");
-  				$.post('/ajax.php', {id: id_post}, function(data, textStatus, xhr) {
-  					console.log($.parseJSON(data) );
-  					$(".modal-body").html($.parseJSON(data).pagetext);
-  					$("#modal-id").modal();
+
+  			$(document).on("click",".view-content",function(){
+  				var id_post = $(this).attr("id");
+  				$.post('/ajax.php', {option:'get_detail_post',id: id_post}, function(data, textStatus, xhr) {
+					var ele_append = $("<div class=''><auth></auth><content></content></div>");
+					ele_append.children("content").html(data.pagetext);
+					ele_append.children("auth").html(data.postusername);
+  					$(".modal-body").html(ele_append);
+					$("#modal-id").modal();
+
   				});
-  				
-  				//alert($(this).data("id"));
-  			})
+  			});
+
+			$(".view-forum").click(function(){
+				var this_selector = $(this);
+				var id_post = $(this).data("id");
+				var content_forum = this_selector.parent().find(".content-forum");
+				if(content_forum.html() == ""){
+					$.post('/ajax.php', {option:'get_detail_forum',id: id_post}, function(data, textStatus, xhr) {
+						$.each(data,function(k,v){
+							var ele_append = $("<div class=''>  <content></content> <authen></authen> </div>");
+							ele_append.find("authen").html(v.postusername);
+							ele_append.find("content").html(v.title);
+							ele_append.addClass("view-content");
+							ele_append.attr("id",v.firstpostid);
+							content_forum.append(ele_append);
+						});
+					});
+
+				}else{
+					content_forum.toggle();
+				}
+			});
+
   		</script>
  	</body>
  </html>
