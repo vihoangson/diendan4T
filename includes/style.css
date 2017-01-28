@@ -1,0 +1,28 @@
+
+authen {
+    display: block;
+    font-weight: bold;
+
+}
+.view-content {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    padding-left: 33px;
+    cursor: pointer;
+}
+content {
+    font-size: 18px;
+    color: rgb(51, 126, 193);
+}
+h3.view-forum {
+    color: #262a61;
+    margin: 5px;
+    padding: 0px;
+}
+.forum-contain {
+    padding: 5px;
+    background: #f3f5ff;
+    margin: 5px;
+    border-radius: 9px;
+}

@@ -1,6 +1,8 @@
 <?php
 require "config.php";
-$sql = "SELECT * FROM `mst_forum` ";
+$sql = "SELECT * FROM `mst_forum` where forumid in (2,161,162,55,46,158,159,160,164,75,157,176,77,169,81,84,96,143,145,141,152,151,177)
+order by forumid 
+";
 if ($result = $mysqli->query($sql)) {
 	$forums = [];
 	while ($row = $result->fetch_object()){
@@ -15,14 +17,8 @@ if ($result = $mysqli->query($sql)) {
  		<meta charset="utf-8">
  		<meta http-equiv="X-UA-Compatible" content="IE=edge">
  		<meta name="viewport" content="width=device-width, initial-scale=1">
- 		<title>Title Page</title>
-		 <style>
-			 authen {
-				 display: block;
-				 font-weight: bold;
-				 margin-bottom: 23px;
-			 }
-		 </style>
+ 		<title>Diễn đàn 4T</title>
+		<link rel="stylesheet" href="includes/style.css">
  		<!-- Bootstrap CSS -->
  		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
  
@@ -38,8 +34,8 @@ if ($result = $mysqli->query($sql)) {
  <?php
 	foreach ($forums as $key => $value){
  		echo "
-	<div>
-		<h3 class='view-forum' data-id='$value->forumid'>$value->title</h3>
+	<div class='forum-contain'>
+		<h3 class='view-forum' data-id='$value->forumid'> $value->title</h3>
 		<div class='content-forum'></div>
 	</div>
 ";
@@ -92,6 +88,7 @@ if ($result = $mysqli->query($sql)) {
 							var ele_append = $("<div class=''>  <content></content> <authen></authen> </div>");
 							ele_append.find("authen").html(v.postusername);
 							ele_append.find("content").html(v.title);
+							ele_append.append("<time>"+v.dateline+"</time>");
 							ele_append.addClass("view-content");
 							ele_append.attr("id",v.firstpostid);
 							content_forum.append(ele_append);
