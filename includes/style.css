@@ -26,3 +26,12 @@ h3.view-forum {
     margin: 5px;
     border-radius: 9px;
 }
+.detail-contain {
+    background: #efefef;
+    padding: 5px;
+    margin: 10px;
+}
+
+.detail-contain h3 {
+    margin: 0;
+}

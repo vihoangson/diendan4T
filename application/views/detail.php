@@ -1,13 +1,17 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 $this->load->view("layout/header");
-        echo "
-		<div class='forum-contain'>
-			<h3 class='view-forum' data-id='$data->threadid'> 
-			        $data->title			        
-			</h3>
-			".bbcode_decode($data->pagetext)."
+foreach ($data as $row){
+    echo "
+		<div class='detail-contain'>
+			<h3 class='view-forum' data-id=''>$row->title</h3>		    
+		    <h4>$row->username</h4>
+            <div>".date("Y-m-d H:i:s",$row->dateline)."</div>
+
+			".bbcode_decode($row->pagetext)."
 			<div class='content-forum'></div>
 		</div>
 		";
+}
+
 $this->load->view("layout/footer");
