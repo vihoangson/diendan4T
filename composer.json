@@ -9,6 +9,5 @@
     "require": {
         "golonka/bbcodeparser": "^2.2",
         "devristo/bbcode": "^0.1.0",
-        "chriskacerguis/codeigniter-restserver": "^3.0"
     }
 }
