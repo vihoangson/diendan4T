@@ -17,7 +17,7 @@
                 <li class="active"><a href="#">Link</a></li>
                 <li><a href="#">Link</a></li>
             </ul>
-            <form class="navbar-form navbar-left" role="search">
+            <form class="navbar-form navbar-left hidden" role="search">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Search">
                 </div>
