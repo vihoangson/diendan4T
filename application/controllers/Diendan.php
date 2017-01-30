@@ -56,13 +56,18 @@ class Diendan extends MY_Controller {
         $this->load->model("Diendan_model");
 
         $data_thread = $this->Thread_model->get($threadid);
-        $data = $this->Post_model->where(["threadid"=>$threadid])->get_all();
+        $data = $this->Post_model->where(["threadid"=>$threadid])->order_by("postid")->get_all();
 
         $forum_data = $this->Forum_model->get($data_thread->forumid);
         $this->breadcrumbs->push($forum_data->title, "/diendan/cat/".$forum_data->forumid);
 
-        $this->load->vars(["data"=>$data]);
-        $this->breadcrumbs->push($data[0]->title, '#');
+        $this->load->vars(["data"=>$data,"data_thread"=>$data_thread]);
+        if(isset($data[0])){
+            $this->breadcrumbs->push($data[0]->title, '#');
+        }else{
+            redirect("/");
+
+        }
         $this->load->view('detail');
     }
 
