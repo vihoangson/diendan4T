@@ -34,7 +34,7 @@ class Diendan extends MY_Controller {
 
         $this->load->model(["Forum_model","Thread_model"]);
 
-        $data = $this->Thread_model->where(["forumid"=>$forumid])->get_all();
+        $data = $this->Thread_model->where(["forumid"=>$forumid])->order_by("threadid","desc")->get_all();
         $this->load->vars(["data"=>$data]);
 
         $forum_data = $this->Forum_model->get($forumid);
