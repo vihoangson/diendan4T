@@ -5,7 +5,7 @@ $this->load->view("layout/header");
         echo "
 		<div class='forum-contain'>
 			<h3 class='view-forum' data-id='$value->threadid'> 
-			    <a href='/diendan/detail/$value->threadid'>
+			    <a href='/diendan/detail/$value->threadid-".createSlug($value->title)."'>
 			        $value->title    
                 </a>
 			</h3>

@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+$this->load->vars("title",$data[0]->title);
 $this->load->view("layout/header");
 foreach ($data as $row){
     echo "
