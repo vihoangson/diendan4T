@@ -1,6 +1,15 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-$this->load->vars("title",$data[0]->title);
+
+/**
+ * Set title cho trang
+ */
+if(isset($data[0]->title)){
+	$this->load->vars("title",$data[0]->title);
+}else{
+	$this->load->vars("title","");
+}
+
 $this->load->view("layout/header");
 foreach ($data as $row){
     echo "
